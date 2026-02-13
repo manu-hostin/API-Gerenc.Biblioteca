@@ -28,4 +28,12 @@ public class UsuarioService {
     public Usuario listarUserID(int id) throws SQLException {
         return repo.listarUsuarioID(id);
     }
+
+    public boolean atualizarUsuario(Usuario user, int id) throws SQLException {
+        return repo.atualizarUsuarios(user, id);
+    }
+
+    public boolean deletarUsuarios(int id) throws SQLException {
+        return repo.deletarUser(id);
+    }
 }

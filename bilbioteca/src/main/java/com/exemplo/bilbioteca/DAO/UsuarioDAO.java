@@ -69,4 +69,40 @@ public class UsuarioDAO {
         }
         return null;
     }
+
+    public boolean atualizarUsuarios(Usuario user, int id) throws SQLException {
+        String query = "UPDATE usuario SET nome = ?, email = ? WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, user.getNome());
+            stmt.setString(2, user.getEmail());
+            stmt.setInt(3, id);
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deletarUser(int id) throws SQLException {
+        String query = "DELETE FROM usuario WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 }

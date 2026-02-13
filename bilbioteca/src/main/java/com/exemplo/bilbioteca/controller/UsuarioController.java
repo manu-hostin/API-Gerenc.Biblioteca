@@ -47,4 +47,21 @@ public class UsuarioController {
         }
     }
 
+    @PutMapping("/usuarios/atualizar/{id}")
+    public boolean putUser (@RequestBody Usuario user, @PathVariable int id) {
+        try {
+            return service.atualizarUsuario(user, id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/usuarios/deletar/{id}")
+    public boolean deleteUser (@PathVariable int id){
+        try {
+            return service.deletarUsuarios(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
