@@ -19,12 +19,11 @@ public class OlaMundoController {
     }
 
     @GetMapping("/id-teste")
-    public List<Usuario> buscarIDTeste () throws SQLException {
+    public List<Usuario> buscarIDTeste () { // SEM SQLEXCEPTION, com try-catch
         List<Usuario> lista = new ArrayList<>();
 
         try {
             lista = usuarioService.obterUsuarios();
-            return lista;
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -32,7 +31,43 @@ public class OlaMundoController {
         return lista;
     }
     @PostMapping("/cadastro")
-    public Usuario postUser (@RequestBody Usuario user) throws SQLException {
-        return usuarioService.salvarUser(user);
+    public Usuario postUser (@RequestBody Usuario user) { // Na hora de testar no postman, tem que ser com o mesmo nome/atributo daqui do intelliJ
+
+        try {
+            user = usuarioService.salvarUser(user);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @PutMapping("/{id}") // aqui tem que ser o mesmo nome do parametro entre ()
+    public Usuario atualizarUsuario (@PathVariable int id, @RequestBody Usuario user) {
+
+        try {
+            return user = usuarioService.atualizarUsuario(user, id); // Segue a ordem dos parâmetros do service
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    public Usuario buscarContatoPorID (@PathVariable int id) {
+        try {
+            return usuarioService.buscarCttPorID(id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarContato (@PathVariable int id) {
+        try {
+            usuarioService.deletarPorID(id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        } catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

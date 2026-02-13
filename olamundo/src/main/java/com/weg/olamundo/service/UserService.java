@@ -24,4 +24,22 @@ public class UserService {
         userRepo.salvarUser(user);
         return user;
     }
+
+    public Usuario atualizarUsuario (Usuario user, int id) throws SQLException {
+        user.setId(id);
+        userRepo.atualizarUsuario(user);
+
+        return user;
+    }
+
+    public Usuario buscarCttPorID (int id) throws SQLException {
+        return userRepo.buscarCttPorID(id);
+    }
+
+    public void deletarPorID(int id) throws SQLException {
+        if (!userRepo.contatoExiste(id)) {
+            throw new RuntimeException("Contato não existe!");
+        }
+        userRepo.deletarCttPorID(id);
+    }
 }
