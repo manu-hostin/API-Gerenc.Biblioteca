@@ -2,12 +2,11 @@ package com.exemplo.bilbioteca.controller;
 
 import com.exemplo.bilbioteca.model.Emprestimo;
 import com.exemplo.bilbioteca.service.EmprestimoService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/biblioteca")
@@ -27,6 +26,17 @@ public class EmprestimoController {
             throw new RuntimeException(e.getMessage());
         }
         return emprestimo;
+    }
+
+    @GetMapping("/emprestimo/listar")
+    public List<Emprestimo> getEmprestimos () {
+        List<Emprestimo> lista = new ArrayList<>();
+        try {
+            lista = service.listarEmprestimos();
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+        return lista;
     }
 
 
