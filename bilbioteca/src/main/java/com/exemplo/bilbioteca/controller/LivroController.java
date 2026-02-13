@@ -38,4 +38,31 @@ public class LivroController {
         }
         return livros;
     }
+
+    @GetMapping("/listar/{id}")
+    public Livro getLivroID (@PathVariable int id) {
+        try {
+            return service.listarLivrosID(id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public boolean putLivro (@PathVariable int id, @RequestBody Livro livro){
+        try {
+            return service.atualizarLivro(id, livro);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public boolean deleteLivro (@PathVariable int id) {
+        try {
+            return service.deletarLivro(id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

@@ -23,4 +23,16 @@ public class LivroService {
     public List<Livro> listarLivros () throws SQLException {
         return repo.obterLivros();
     }
+    public Livro listarLivrosID (int id) throws SQLException {
+        return repo.obterLivroByID(id);
+    }
+
+    public boolean atualizarLivro(int id, Livro livro) throws SQLException {
+        return repo.atualizarLivro(id, livro);
+
+    }
+
+    public boolean deletarLivro(int id) throws SQLException {
+        return repo.deletarLivro(id);
+    }
 }
