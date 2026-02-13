@@ -2,20 +2,19 @@ package com.exemplo.bilbioteca.controller;
 
 import com.exemplo.bilbioteca.model.Livro;
 import com.exemplo.bilbioteca.service.LivroService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/biblioteca")
-public class BibliotecaController {
+public class LivroController {
 
     private final LivroService service;
 
-    public BibliotecaController (LivroService service){
+    public LivroController(LivroService service){
         this.service = service;
     }
 
@@ -27,5 +26,16 @@ public class BibliotecaController {
             throw new RuntimeException(e.getMessage());
         }
         return livro;
+    }
+
+    @GetMapping("/listar")
+    public List<Livro> getLivro (){
+        List<Livro> livros = new ArrayList<>();
+        try {
+            livros = service.listarLivros();
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+        return livros;
     }
 }

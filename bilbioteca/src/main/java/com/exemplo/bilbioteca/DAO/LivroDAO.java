@@ -2,9 +2,13 @@ package com.exemplo.bilbioteca.DAO;
 
 import com.exemplo.bilbioteca.conexao.Conexao;
 import com.exemplo.bilbioteca.model.Livro;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Repository
 public class LivroDAO {
 
     public Livro cadastrarLivro (Livro livro) throws SQLException {
@@ -16,8 +20,9 @@ public class LivroDAO {
             stmt.setString(1, livro.getAutor());
             stmt.setString(2, livro.getAutor());
             stmt.setInt(3, livro.getAno_publicacao());
-            ResultSet rs = stmt.getGeneratedKeys();
             stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
                 livro.setId(rs.getInt(1));
@@ -25,5 +30,25 @@ public class LivroDAO {
             }
         }
         return null;
+    }
+
+    public List<Livro> obterLivros () throws SQLException {
+        String query = "SELECT id, titulo, autor, ano_publicacao FROM livro";
+
+        List<Livro> lista = new ArrayList<>();
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)){
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Livro livro = new Livro(rs.getInt("id"),
+                        rs.getString("titulo"),
+                        rs.getString("autor"),
+                        rs.getInt("ano_publicacao"));
+                lista.add(livro);
+            }
+        }
+        return lista;
     }
 }
