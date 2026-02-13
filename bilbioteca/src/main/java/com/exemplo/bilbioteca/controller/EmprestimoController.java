@@ -39,5 +39,16 @@ public class EmprestimoController {
         return lista;
     }
 
+    @GetMapping("/emprestimo/listar/{id}")
+    public List<Emprestimo> getEmprestimos (@PathVariable int id) {
+        List<Emprestimo> lista = new ArrayList<>();
+        try {
+            lista = service.listarEmprestimosID(id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+        return lista;
+    }
+
 
 }

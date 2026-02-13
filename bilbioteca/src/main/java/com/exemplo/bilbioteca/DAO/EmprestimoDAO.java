@@ -59,4 +59,27 @@ public class EmprestimoDAO {
         }
         return lista;
     }
+    public List<Emprestimo> listarEmprestimosID(int id) throws SQLException {
+        String query = "SELECT id, livro_id, usuario_id, data_emprestimo, data_devolucao FROM emprestimo WHERE id = ?";
+
+        List<Emprestimo> lista = new ArrayList<>();
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Emprestimo emp = new Emprestimo(
+                        rs.getInt("id"),
+                        rs.getInt("livro_id"),
+                        rs.getInt("usuario_id"),
+                        rs.getDate("data_emprestimo").toLocalDate(),
+                        rs.getDate("data_devolucao").toLocalDate()
+                );
+                lista.add(emp);
+            }
+        }
+        return lista;
+    }
 }

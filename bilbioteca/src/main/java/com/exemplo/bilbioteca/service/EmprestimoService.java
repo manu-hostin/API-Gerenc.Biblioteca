@@ -25,4 +25,8 @@ public class EmprestimoService {
     public List<Emprestimo> listarEmprestimos() throws SQLException {
         return repo.listarEmprestimos();
     }
+
+    public List<Emprestimo> listarEmprestimosID(int id) throws SQLException {
+        return repo.listarEmprestimosID(id);
+    }
 }
