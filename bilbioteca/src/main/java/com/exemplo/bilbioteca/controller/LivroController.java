@@ -19,7 +19,7 @@ public class LivroController {
     }
 
     @PostMapping("/livros/cadastrar")
-    public Livro postLivro (@RequestBody Livro livro){
+    public Livro postLivro (@RequestBody Livro livro) {
         try {
             livro = service.cadastrarLivro(livro);
         } catch (SQLException e) {
