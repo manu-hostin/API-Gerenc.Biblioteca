@@ -18,7 +18,7 @@ public class LivroController {
         this.service = service;
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping("/livros/cadastrar")
     public Livro postLivro (@RequestBody Livro livro){
         try {
             livro = service.cadastrarLivro(livro);
@@ -28,7 +28,7 @@ public class LivroController {
         return livro;
     }
 
-    @GetMapping("/listar")
+    @GetMapping("/livros/listar")
     public List<Livro> getLivro (){
         List<Livro> livros = new ArrayList<>();
         try {
@@ -39,7 +39,7 @@ public class LivroController {
         return livros;
     }
 
-    @GetMapping("/listar/{id}")
+    @GetMapping("/livros/listar/{id}")
     public Livro getLivroID (@PathVariable int id) {
         try {
             return service.listarLivrosID(id);
@@ -48,7 +48,7 @@ public class LivroController {
         }
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PutMapping("/livros/atualizar/{id}")
     public boolean putLivro (@PathVariable int id, @RequestBody Livro livro){
         try {
             return service.atualizarLivro(id, livro);
@@ -57,7 +57,7 @@ public class LivroController {
         }
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/livros/deletar/{id}")
     public boolean deleteLivro (@PathVariable int id) {
         try {
             return service.deletarLivro(id);
