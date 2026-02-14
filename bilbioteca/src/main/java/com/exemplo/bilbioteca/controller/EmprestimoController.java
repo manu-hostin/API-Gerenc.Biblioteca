@@ -59,5 +59,12 @@ public class EmprestimoController {
         }
     }
 
-
+    @DeleteMapping("/emprestimo/deletar/{id}")
+    public boolean deleteEmprestimo (@PathVariable int id){
+        try {
+            return service.deletarEmprestimo(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

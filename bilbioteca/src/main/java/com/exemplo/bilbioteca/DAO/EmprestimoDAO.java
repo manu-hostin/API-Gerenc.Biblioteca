@@ -103,4 +103,20 @@ public class EmprestimoDAO {
         }
         return false;
     }
+
+    public boolean deletarEmprestimo(int id) throws SQLException {
+        String query = "DELETE FROM emprestimo WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

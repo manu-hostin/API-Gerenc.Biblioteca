@@ -31,7 +31,6 @@ public class LivroService {
         return repo.atualizarLivro(id, livro);
 
     }
-
     public boolean deletarLivro(int id) throws SQLException {
         return repo.deletarLivro(id);
     }

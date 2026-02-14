@@ -33,5 +33,8 @@ public class EmprestimoService {
     public boolean atualizarEmprestimo (Emprestimo emprestimo, int id) throws SQLException {
         return repo.atualizarEmprestimo(emprestimo, id);
     }
+    public boolean deletarEmprestimo(int id) throws SQLException {
+        return repo.deletarEmprestimo(id);
+    }
 
 }
