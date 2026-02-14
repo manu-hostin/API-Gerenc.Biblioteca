@@ -20,7 +20,7 @@ public class UsuarioDAO {
             stmt.setString(1, user.getNome());
             stmt.setString(2, user.getEmail());
             stmt.executeUpdate();
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
                 user.setId(rs.getInt(1));

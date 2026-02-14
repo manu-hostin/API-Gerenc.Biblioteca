@@ -82,4 +82,25 @@ public class EmprestimoDAO {
         }
         return lista;
     }
+
+    public boolean atualizarEmprestimo(Emprestimo emprestimo, int id) throws SQLException{
+        String query = "UPDATE emprestimo SET livro_id = ?, usuario_id = ?, data_emprestimo = ?, data_devolucao = ? WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, emprestimo.getLivro_id());
+            stmt.setInt(2, emprestimo.getUsuario_id());
+            stmt.setDate(3, java.sql.Date.valueOf(emprestimo.getData_emprestimo()));
+            stmt.setDate(4, java.sql.Date.valueOf(emprestimo.getData_devolucao()));
+            stmt.setInt(5, id);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

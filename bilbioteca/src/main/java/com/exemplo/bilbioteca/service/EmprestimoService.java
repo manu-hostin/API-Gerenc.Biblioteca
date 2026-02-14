@@ -29,4 +29,9 @@ public class EmprestimoService {
     public List<Emprestimo> listarEmprestimosID(int id) throws SQLException {
         return repo.listarEmprestimosID(id);
     }
+
+    public boolean atualizarEmprestimo (Emprestimo emprestimo, int id) throws SQLException {
+        return repo.atualizarEmprestimo(emprestimo, id);
+    }
+
 }

@@ -50,5 +50,14 @@ public class EmprestimoController {
         return lista;
     }
 
+    @PutMapping("/emprestimo/atualizar/{id}")
+    public boolean putEmprestimos (@RequestBody Emprestimo emprestimo, @PathVariable int id){
+        try {
+            return service.atualizarEmprestimo(emprestimo, id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 
 }
