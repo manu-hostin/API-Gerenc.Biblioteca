@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,4 +38,7 @@ public class EmprestimoService {
         return repo.deletarEmprestimo(id);
     }
 
+    public boolean registrarDevolucao(LocalDate devolucao, int id) throws SQLException {
+        return repo.registrarDev(devolucao, id);
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,6 +112,24 @@ public class EmprestimoDAO {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean registrarDev(LocalDate devolucao, int id) throws SQLException {
+        String query = "UPDATE emprestimo SET data_devolucao = ? WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setDate(1, java.sql.Date.valueOf(devolucao));
+            stmt.setInt(2, id);
+
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {

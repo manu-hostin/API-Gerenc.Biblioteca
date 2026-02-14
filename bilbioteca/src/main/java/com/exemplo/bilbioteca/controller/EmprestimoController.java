@@ -5,8 +5,10 @@ import com.exemplo.bilbioteca.service.EmprestimoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/biblioteca")
@@ -67,4 +69,13 @@ public class EmprestimoController {
             throw new RuntimeException(e.getMessage());
         }
     }
+    @PutMapping("/emprestimo/{id}/devolucao")
+    public boolean putDevolucao (@RequestBody Emprestimo emprestimo, @PathVariable int id){
+        try {
+            return service.registrarDevolucao(emprestimo.getData_devolucao(), id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 }
