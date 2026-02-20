@@ -1,5 +1,6 @@
 package com.exemplo.bilbioteca.controller;
 
+import com.exemplo.bilbioteca.model.Emprestimo;
 import com.exemplo.bilbioteca.model.Usuario;
 import com.exemplo.bilbioteca.service.UsuarioService;
 import org.apache.catalina.User;
@@ -64,4 +65,9 @@ public class UsuarioController {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+
+
+
+
 }

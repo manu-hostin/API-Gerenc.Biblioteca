@@ -1,7 +1,9 @@
 package com.exemplo.bilbioteca.controller;
 
 import com.exemplo.bilbioteca.model.Emprestimo;
+import com.exemplo.bilbioteca.model.Usuario;
 import com.exemplo.bilbioteca.service.EmprestimoService;
+import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -73,6 +75,15 @@ public class EmprestimoController {
     public boolean putDevolucao (@RequestBody Emprestimo emprestimo, @PathVariable int id){
         try {
             return service.registrarDevolucao(emprestimo.getData_devolucao(), id);
+        } catch (SQLException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @GetMapping ("/usuarios/{id}/emprestimos")
+    public List<Emprestimo> getEmprestimosUser (@PathVariable int id){
+        try {
+            return service.listarEmprestimosDoUser(id);
         } catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }

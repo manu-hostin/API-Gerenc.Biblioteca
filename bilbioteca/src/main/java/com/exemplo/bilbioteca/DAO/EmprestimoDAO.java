@@ -4,6 +4,7 @@ import com.exemplo.bilbioteca.conexao.Conexao;
 import com.exemplo.bilbioteca.controller.EmprestimoController;
 import com.exemplo.bilbioteca.model.Emprestimo;
 import com.exemplo.bilbioteca.model.Livro;
+import com.exemplo.bilbioteca.model.Usuario;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class EmprestimoDAO {
             stmt.setInt(1, emprestimo.getLivro_id());
             stmt.setInt(2, emprestimo.getUsuario_id());
             stmt.setDate(3, java.sql.Date.valueOf(emprestimo.getData_emprestimo()));
-            stmt.setDate(4, java.sql.Date.valueOf(emprestimo.getData_devolucao()));
+            stmt.setDate(4, null);
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -137,5 +138,35 @@ public class EmprestimoDAO {
             }
         }
         return false;
+    }
+
+    public List<Emprestimo> listarEmprestimoDoUser(int id) throws SQLException {
+        String query = """
+                        SELECT e.id, e.livro_id, e.usuario_id, e.data_emprestimo, e.data_devolucao
+                        FROM emprestimo e
+                        JOIN usuario u ON e.usuario_id = u.id
+                        WHERE u.id = ?
+                        """;
+
+        List<Emprestimo> lista = new ArrayList<>();
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Emprestimo emp = new Emprestimo(
+                        rs.getInt("id"),
+                        rs.getInt("livro_id"),
+                        rs.getInt("usuario_id"),
+                        rs.getDate("data_emprestimo").toLocalDate(),
+                        rs.getDate("data_devolucao").toLocalDate()
+                );
+                lista.add(emp);
+
+            }
+        }
+        return lista;
     }
 }

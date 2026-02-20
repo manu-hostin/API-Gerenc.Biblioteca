@@ -2,6 +2,7 @@ package com.exemplo.bilbioteca.DAO;
 
 import com.exemplo.bilbioteca.conexao.Conexao;
 import com.exemplo.bilbioteca.model.Livro;
+import com.exemplo.bilbioteca.model.Usuario;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -108,4 +109,6 @@ public class LivroDAO {
         }
         return false;
     }
+
+
 }

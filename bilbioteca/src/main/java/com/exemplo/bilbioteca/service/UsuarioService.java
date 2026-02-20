@@ -1,6 +1,7 @@
 package com.exemplo.bilbioteca.service;
 
 import com.exemplo.bilbioteca.DAO.UsuarioDAO;
+import com.exemplo.bilbioteca.model.Emprestimo;
 import com.exemplo.bilbioteca.model.Livro;
 import com.exemplo.bilbioteca.model.Usuario;
 import org.springframework.stereotype.Service;
@@ -36,4 +37,5 @@ public class UsuarioService {
     public boolean deletarUsuarios(int id) throws SQLException {
         return repo.deletarUser(id);
     }
+
 }

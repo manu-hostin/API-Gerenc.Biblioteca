@@ -1,6 +1,7 @@
 package com.exemplo.bilbioteca.DAO;
 
 import com.exemplo.bilbioteca.conexao.Conexao;
+import com.exemplo.bilbioteca.model.Emprestimo;
 import com.exemplo.bilbioteca.model.Usuario;
 import org.springframework.stereotype.Repository;
 
@@ -105,4 +106,6 @@ public class UsuarioDAO {
         return false;
 
     }
+
+
 }
