@@ -1,9 +1,9 @@
 package com.exemplo.bilbioteca.controller;
 
-import com.exemplo.bilbioteca.model.Emprestimo;
+import com.exemplo.bilbioteca.dto.UsuarioRequisicaoDTO;
+import com.exemplo.bilbioteca.dto.UsuarioRespostaDTO;
 import com.exemplo.bilbioteca.model.Usuario;
 import com.exemplo.bilbioteca.service.UsuarioService;
-import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -20,23 +20,22 @@ public class UsuarioController {
         this.service = service;
     }
     @PostMapping ("/usuarios/cadastrar")
-    public void postUser (@RequestBody Usuario user) {
+    public UsuarioRespostaDTO postUser (@RequestBody UsuarioRequisicaoDTO requisicaoDTO) {
         try {
-            service.cadastrarUser(user);
+            return service.cadastrarUser(requisicaoDTO);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
     @GetMapping("/usuarios/listar")
-    public List<Usuario> getUsuarios () {
+    public List<UsuarioRespostaDTO> getUsuarios () {
         List<Usuario> lista = new ArrayList<>();
         try {
-            lista = service.listarUsers();
+            return service.listarUsers();
         } catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }
-        return lista;
     }
 
     @GetMapping("/usuarios/listar/{id}")

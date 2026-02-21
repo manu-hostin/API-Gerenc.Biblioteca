@@ -1,12 +1,14 @@
 package com.exemplo.bilbioteca.service;
 
 import com.exemplo.bilbioteca.DAO.UsuarioDAO;
-import com.exemplo.bilbioteca.model.Emprestimo;
-import com.exemplo.bilbioteca.model.Livro;
+import com.exemplo.bilbioteca.dto.UsuarioRequisicaoDTO;
+import com.exemplo.bilbioteca.dto.UsuarioRespostaDTO;
+import com.exemplo.bilbioteca.mapper.UsuarioMapper;
 import com.exemplo.bilbioteca.model.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,16 +16,21 @@ public class UsuarioService {
 
     private final UsuarioDAO repo;
 
-    public UsuarioService (UsuarioDAO repo){
+    private final UsuarioMapper mapper;
+
+    public UsuarioService (UsuarioDAO repo, UsuarioMapper mapper){
         this.repo = repo;
+        this.mapper = mapper;
     }
 
-    public void cadastrarUser (Usuario user) throws SQLException {
-        repo.cadastrarUsuario(user);
+    public UsuarioRespostaDTO cadastrarUser (UsuarioRequisicaoDTO requisicaoDTO) throws SQLException {
+        Usuario user = mapper.paraEntidade(requisicaoDTO);
+        return mapper.paraRespostaDTO(repo.cadastrarUsuario(user));
     }
 
-    public List<Usuario> listarUsers () throws SQLException {
-        return repo.listarUsuarios();
+    public List<UsuarioRespostaDTO> listarUsers () throws SQLException {
+        List<Usuario> lista = repo.listarUsuarios();
+        return mapper.paraRespostaLista(lista);
     }
 
     public Usuario listarUserID(int id) throws SQLException {

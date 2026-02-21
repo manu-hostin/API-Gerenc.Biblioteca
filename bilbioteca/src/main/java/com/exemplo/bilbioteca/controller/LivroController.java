@@ -1,5 +1,7 @@
 package com.exemplo.bilbioteca.controller;
 
+import com.exemplo.bilbioteca.dto.LivroRequisicaoDTO;
+import com.exemplo.bilbioteca.dto.LivroRespostaDTO;
 import com.exemplo.bilbioteca.model.Livro;
 import com.exemplo.bilbioteca.service.LivroService;
 import org.springframework.web.bind.annotation.*;
@@ -14,29 +16,27 @@ public class LivroController {
 
     private final LivroService service;
 
-    public LivroController(LivroService service){
+    public LivroController (LivroService service){
         this.service = service;
     }
 
     @PostMapping("/livros/cadastrar")
-    public Livro postLivro (@RequestBody Livro livro) {
+    public LivroRespostaDTO postLivro (@RequestBody LivroRequisicaoDTO requisicaoDTO) {
         try {
-            livro = service.cadastrarLivro(livro);
+            return service.cadastrarLivro(requisicaoDTO);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
-        return livro;
     }
 
     @GetMapping("/livros/listar")
-    public List<Livro> getLivro (){
+    public List<LivroRespostaDTO> getLivro (){
         List<Livro> livros = new ArrayList<>();
         try {
-            livros = service.listarLivros();
+           return service.listarLivros();
         } catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }
-        return livros;
     }
 
     @GetMapping("/livros/listar/{id}")

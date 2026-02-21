@@ -1,5 +1,7 @@
 package com.exemplo.bilbioteca.controller;
 
+import com.exemplo.bilbioteca.dto.EmprestimoRequisicaoDTO;
+import com.exemplo.bilbioteca.dto.EmprestimoRespostaDTO;
 import com.exemplo.bilbioteca.model.Emprestimo;
 import com.exemplo.bilbioteca.model.Usuario;
 import com.exemplo.bilbioteca.service.EmprestimoService;
@@ -18,29 +20,27 @@ public class EmprestimoController {
 
     private final EmprestimoService service;
 
-    public EmprestimoController(EmprestimoService service) {
+    public EmprestimoController (EmprestimoService service) {
         this.service = service;
     }
 
     @PostMapping("/emprestimo/cadastrar")
-    public Emprestimo postEmprestimo (@RequestBody Emprestimo emprestimo) {
+    public EmprestimoRespostaDTO postEmprestimo (@RequestBody EmprestimoRequisicaoDTO emprestimoRequisicaoDTO) {
         try {
-            emprestimo = service.cadastrarEmprestimo(emprestimo);
+            return service.cadastrarEmprestimo(emprestimoRequisicaoDTO);
         } catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }
-        return emprestimo;
     }
 
     @GetMapping("/emprestimo/listar")
-    public List<Emprestimo> getEmprestimos () {
+    public List<EmprestimoRespostaDTO> getEmprestimos () {
         List<Emprestimo> lista = new ArrayList<>();
         try {
-            lista = service.listarEmprestimos();
+            return service.listarEmprestimos();
         } catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }
-        return lista;
     }
 
     @GetMapping("/emprestimo/listar/{id}")
